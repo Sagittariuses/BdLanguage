@@ -63,19 +63,27 @@ namespace BdLanguage
                     SqlCommand cmd = LanguageConnection.CreateCommand();
                     if (Bank.Clicked)
                     {
-                        cmd.CommandText = "UPDATE INTO Clients values ('" + iDLabel1.Text + "','" + firstNameTextBox.Text + "','" + lastNameTextBox.Text + "','" + patronymicTextBox.Text + "','" + birthdayDateTimePicker.Value.ToString() + "','" + Bank.Register.ToString() + "','" + emailTextBox.Text + "','" + phoneTextBox.Text + "','" + genderCodeComboBox.Text + "')";
+                        cmd.CommandText = "UPDATE Client SET FirstName=@FirstName, LastName=@LastName, Patronymic=@Patronymic, Birthday=@Birthday, Email=@Email, Phone=@Phone, GenderCode=@GenderCode WHERE ID = @ID";
+                        cmd.Parameters.AddWithValue("@FirstName", Bank.FirstName);
+                        cmd.Parameters.AddWithValue("@LastName", Bank.LastName);
+                        cmd.Parameters.AddWithValue("@Patronymic", Bank.Patronymic);
+                        cmd.Parameters.AddWithValue("@Birthday", Bank.Bithday);
+                        cmd.Parameters.AddWithValue("@Email", Bank.Email);
+                        cmd.Parameters.AddWithValue("@Phone", Bank.Phone);
+                        cmd.Parameters.AddWithValue("@GenderCode", genderCodeComboBox.Text);
+                        cmd.Parameters.AddWithValue("@ID", Bank.Id);
                         cmd.ExecuteNonQuery();
                     }
                     else
                     {
-                        cmd.CommandText = "INSERT INTO [Clients] values ('" + iDLabel1.Text + "','" + firstNameTextBox.Text + "','" + lastNameTextBox.Text + "','" + patronymicTextBox.Text + "','" + birthdayDateTimePicker.Value + "','" + DateTime.Today + "','" + emailTextBox.Text + "','" + phoneTextBox.Text + "','" + genderCodeComboBox.Text + "')";
+                        cmd.CommandText = "INSERT INTO Client (ID, FirstName, LastName, Patronymic, Birthday, RegistrationDate, Email, Phone, GenderCode) values ('" + Convert.ToInt32(iDLabel1.Text) + "','" + firstNameTextBox.Text + "','" + lastNameTextBox.Text + "','" + patronymicTextBox.Text + "','" + birthdayDateTimePicker.Value + "','" + DateTime.Today + "','" + emailTextBox.Text + "','" + phoneTextBox.Text + "','" + genderCodeComboBox.Text + "')";
                         cmd.ExecuteNonQuery();
                     }
                     this.Close();
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    MessageBox.Show("Все сломалось");
+                    MessageBox.Show(ex.ToString());
                 }
                 finally
                 {

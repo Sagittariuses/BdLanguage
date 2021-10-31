@@ -67,7 +67,6 @@ namespace BdLanguage
                         }
                     }
                 }
-
             }
             else
             {
@@ -140,7 +139,11 @@ namespace BdLanguage
             Bank.Clicked = false;
             client = new NewClient();
             client.ShowDialog();
-            
+            ClientDG.Refresh();
+            SqlDataAdapter dataAdapterClient = new SqlDataAdapter("WITH C AS ( SELECT A.ID, A.LastName, A.FirstName, A.Patronymic, A.GenderCode, A.Phone, A.Email, A.Birthday, A.RegistrationDate,(Select MAX(B.StartTime) FROM ClientService B WHERE B.ClientID = A.ID) StartTime, (Select COUNT(1) FROM ClientService B WHERE B.ClientID = A.ID) countproc FROM Client A) select ID, LASTNAME, Firstname, Patronymic, GenderCode, Phone, Email, Birthday, RegistrationDate, CASE WHEN StartTime is null then 'Нет таковых' ELSE CAST(StartTime AS VARCHAR) END StartTime, countproc from C", LanguageConnection);
+            DataSet db = new DataSet();
+            dataAdapterClient.Fill(db);
+            ClientDG.DataSource = db.Tables[0];
         }
 
         private void EditBtn_Click(object sender, EventArgs e)
@@ -148,11 +151,15 @@ namespace BdLanguage
             Bank.Clicked = true;
             client = new NewClient();
             client.ShowDialog();
+            SqlDataAdapter dataAdapterClient = new SqlDataAdapter("WITH C AS ( SELECT A.ID, A.LastName, A.FirstName, A.Patronymic, A.GenderCode, A.Phone, A.Email, A.Birthday, A.RegistrationDate,(Select MAX(B.StartTime) FROM ClientService B WHERE B.ClientID = A.ID) StartTime, (Select COUNT(1) FROM ClientService B WHERE B.ClientID = A.ID) countproc FROM Client A) select ID, LASTNAME, Firstname, Patronymic, GenderCode, Phone, Email, Birthday, RegistrationDate, CASE WHEN StartTime is null then 'Нет таковых' ELSE CAST(StartTime AS VARCHAR) END StartTime, countproc from C", LanguageConnection);
+            DataSet db = new DataSet();
+            dataAdapterClient.Fill(db);
+            ClientDG.DataSource = db.Tables[0];
         }
 
         private void ClientDG_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex > 0)
+            if (e.RowIndex > 0 && e.RowIndex+1 < ClientDG.RowCount)
             {
                 Bank.Id = ClientDG.Rows[e.RowIndex].Cells[0].Value.ToString();
                 Bank.LastName = ClientDG.Rows[e.RowIndex].Cells[1].Value.ToString();
@@ -161,8 +168,8 @@ namespace BdLanguage
                 Bank.Sex = Convert.ToInt32(ClientDG.Rows[e.RowIndex].Cells[4].Value.ToString());
                 Bank.Phone = ClientDG.Rows[e.RowIndex].Cells[5].Value.ToString();
                 Bank.Email = ClientDG.Rows[e.RowIndex].Cells[6].Value.ToString();
-                Bank.Bithday = Convert.ToDateTime(ClientDG.Rows[e.RowIndex].Cells[7].Value.ToString());
-                Bank.Register = Convert.ToDateTime(ClientDG.Rows[e.RowIndex].Cells[8].Value.ToString());
+                Bank.Bithday = Convert.ToDateTime(ClientDG.Rows[e.RowIndex].Cells[7].Value);
+                Bank.Register = Convert.ToDateTime(ClientDG.Rows[e.RowIndex].Cells[8].Value);
             }
         }
 
@@ -183,5 +190,6 @@ namespace BdLanguage
             Visit visit = new Visit();
             visit.ShowDialog();
         }
+        
     }
 }

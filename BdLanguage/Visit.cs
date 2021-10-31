@@ -31,7 +31,7 @@ namespace BdLanguage
 
         private void Visit_Load(object sender, EventArgs e)
         {
-            FullNameLb.Text = Bank.FirstName + " " + Bank.LastName + " " + Bank.Patronymic;
+            FullNameLb.Text = Bank.LastName + " " + Bank.FirstName + " " + Bank.Patronymic;
             
         }
 
