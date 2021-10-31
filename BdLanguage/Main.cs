@@ -148,13 +148,16 @@ namespace BdLanguage
 
         private void EditBtn_Click(object sender, EventArgs e)
         {
-            Bank.Clicked = true;
-            client = new NewClient();
-            client.ShowDialog();
-            SqlDataAdapter dataAdapterClient = new SqlDataAdapter("WITH C AS ( SELECT A.ID, A.LastName, A.FirstName, A.Patronymic, A.GenderCode, A.Phone, A.Email, A.Birthday, A.RegistrationDate,(Select MAX(B.StartTime) FROM ClientService B WHERE B.ClientID = A.ID) StartTime, (Select COUNT(1) FROM ClientService B WHERE B.ClientID = A.ID) countproc FROM Client A) select ID, LASTNAME, Firstname, Patronymic, GenderCode, Phone, Email, Birthday, RegistrationDate, CASE WHEN StartTime is null then 'Нет таковых' ELSE CAST(StartTime AS VARCHAR) END StartTime, countproc from C", LanguageConnection);
-            DataSet db = new DataSet();
-            dataAdapterClient.Fill(db);
-            ClientDG.DataSource = db.Tables[0];
+            if (Bank.Id != null)
+            {
+                Bank.Clicked = true;
+                client = new NewClient();
+                client.ShowDialog();
+                SqlDataAdapter dataAdapterClient = new SqlDataAdapter("WITH C AS ( SELECT A.ID, A.LastName, A.FirstName, A.Patronymic, A.GenderCode, A.Phone, A.Email, A.Birthday, A.RegistrationDate,(Select MAX(B.StartTime) FROM ClientService B WHERE B.ClientID = A.ID) StartTime, (Select COUNT(1) FROM ClientService B WHERE B.ClientID = A.ID) countproc FROM Client A) select ID, LASTNAME, Firstname, Patronymic, GenderCode, Phone, Email, Birthday, RegistrationDate, CASE WHEN StartTime is null then 'Нет таковых' ELSE CAST(StartTime AS VARCHAR) END StartTime, countproc from C", LanguageConnection);
+                DataSet db = new DataSet();
+                dataAdapterClient.Fill(db);
+                ClientDG.DataSource = db.Tables[0];
+            }
         }
 
         private void ClientDG_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -190,6 +193,31 @@ namespace BdLanguage
             Visit visit = new Visit();
             visit.ShowDialog();
         }
-        
+
+        private void DeleteBtn_Click(object sender, EventArgs e)
+        {
+            if (Bank.Id != null)
+            {
+                try
+                {
+                    SqlCommand cmd = LanguageConnection.CreateCommand();
+                    cmd.CommandText = "DELETE FROM Client WHERE ID = @ID";
+                    cmd.Parameters.AddWithValue("@ID", Bank.Id);
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+                finally
+                {
+                }
+                SqlDataAdapter dataAdapterClient = new SqlDataAdapter("WITH C AS ( SELECT A.ID, A.LastName, A.FirstName, A.Patronymic, A.GenderCode, A.Phone, A.Email, A.Birthday, A.RegistrationDate,(Select MAX(B.StartTime) FROM ClientService B WHERE B.ClientID = A.ID) StartTime, (Select COUNT(1) FROM ClientService B WHERE B.ClientID = A.ID) countproc FROM Client A) select ID, LASTNAME, Firstname, Patronymic, GenderCode, Phone, Email, Birthday, RegistrationDate, CASE WHEN StartTime is null then 'Нет таковых' ELSE CAST(StartTime AS VARCHAR) END StartTime, countproc from C", LanguageConnection);
+                DataSet db = new DataSet();
+                dataAdapterClient.Fill(db);
+                ClientDG.DataSource = db.Tables[0];
+            }
+                
+        }
     }
 }
