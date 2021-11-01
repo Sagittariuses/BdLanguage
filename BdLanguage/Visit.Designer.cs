@@ -34,6 +34,7 @@ namespace BdLanguage
             this.FullNameLb = new System.Windows.Forms.Label();
             this.flowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.CloseBtn = new System.Windows.Forms.Button();
+            this.attachedProductTableAdapter1 = new BdLanguage.LanguageDataSetTableAdapters.AttachedProductTableAdapter();
             this.SuspendLayout();
             // 
             // VisitLb
@@ -61,15 +62,16 @@ namespace BdLanguage
             this.FullNameLb.AutoSize = true;
             this.FullNameLb.Location = new System.Drawing.Point(72, 58);
             this.FullNameLb.Name = "FullNameLb";
-            this.FullNameLb.Size = new System.Drawing.Size(35, 13);
+            this.FullNameLb.Size = new System.Drawing.Size(33, 13);
             this.FullNameLb.TabIndex = 3;
-            this.FullNameLb.Text = "label3";
+            this.FullNameLb.Text = "name";
             // 
             // flowLayoutPanel
             // 
+            this.flowLayoutPanel.AutoScroll = true;
             this.flowLayoutPanel.Location = new System.Drawing.Point(12, 81);
             this.flowLayoutPanel.Name = "flowLayoutPanel";
-            this.flowLayoutPanel.Size = new System.Drawing.Size(277, 273);
+            this.flowLayoutPanel.Size = new System.Drawing.Size(250, 273);
             this.flowLayoutPanel.TabIndex = 4;
             // 
             // CloseBtn
@@ -84,11 +86,16 @@ namespace BdLanguage
             this.CloseBtn.UseVisualStyleBackColor = false;
             this.CloseBtn.Click += new System.EventHandler(this.CloseBtn_Click);
             // 
+            // attachedProductTableAdapter1
+            // 
+            this.attachedProductTableAdapter1.ClearBeforeFill = true;
+            // 
             // Visit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(308, 421);
+            this.BackColor = System.Drawing.Color.White;
+            this.ClientSize = new System.Drawing.Size(274, 421);
             this.Controls.Add(this.CloseBtn);
             this.Controls.Add(this.flowLayoutPanel);
             this.Controls.Add(this.FullNameLb);
@@ -108,5 +115,6 @@ namespace BdLanguage
         private System.Windows.Forms.Label FullNameLb;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel;
         private System.Windows.Forms.Button CloseBtn;
+        private LanguageDataSetTableAdapters.AttachedProductTableAdapter attachedProductTableAdapter1;
     }
 }

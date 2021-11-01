@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,5 +20,7 @@ namespace BdLanguage
         public static DateTime Bithday;
         public static DateTime Register;
         public static bool Clicked;
+        public static int Total;
+
     }
 }

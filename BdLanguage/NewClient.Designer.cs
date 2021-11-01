@@ -38,7 +38,6 @@ namespace BdLanguage
             System.Windows.Forms.Label phoneLabel;
             System.Windows.Forms.Label emailLabel;
             System.Windows.Forms.Label birthdayLabel;
-            System.Windows.Forms.Label label1;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NewClient));
             this.languageDataSet = new BdLanguage.LanguageDataSet();
             this.clientBindingSource = new System.Windows.Forms.BindingSource(this.components);
@@ -54,6 +53,7 @@ namespace BdLanguage
             this.birthdayDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.SaveBtn = new System.Windows.Forms.Button();
             this.CancelBtn = new System.Windows.Forms.Button();
+            this.NameLB = new System.Windows.Forms.Label();
             iDLabel = new System.Windows.Forms.Label();
             lastNameLabel = new System.Windows.Forms.Label();
             firstNameLabel = new System.Windows.Forms.Label();
@@ -62,7 +62,6 @@ namespace BdLanguage
             phoneLabel = new System.Windows.Forms.Label();
             emailLabel = new System.Windows.Forms.Label();
             birthdayLabel = new System.Windows.Forms.Label();
-            label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.languageDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.clientBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -138,17 +137,6 @@ namespace BdLanguage
             birthdayLabel.Size = new System.Drawing.Size(48, 13);
             birthdayLabel.TabIndex = 15;
             birthdayLabel.Text = "Birthday:";
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            label1.ForeColor = System.Drawing.SystemColors.MenuHighlight;
-            label1.Location = new System.Drawing.Point(57, 18);
-            label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(139, 24);
-            label1.TabIndex = 17;
-            label1.Text = "Новый Клиент";
             // 
             // languageDataSet
             // 
@@ -275,14 +263,26 @@ namespace BdLanguage
             this.CancelBtn.UseVisualStyleBackColor = false;
             this.CancelBtn.Click += new System.EventHandler(this.CancelBtn_Click);
             // 
+            // NameLB
+            // 
+            this.NameLB.AutoSize = true;
+            this.NameLB.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.NameLB.ForeColor = System.Drawing.SystemColors.MenuHighlight;
+            this.NameLB.Location = new System.Drawing.Point(57, 19);
+            this.NameLB.Name = "NameLB";
+            this.NameLB.Size = new System.Drawing.Size(139, 24);
+            this.NameLB.TabIndex = 20;
+            this.NameLB.Text = "Новый Клиент";
+            // 
             // NewClient
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(244, 331);
+            this.Controls.Add(this.NameLB);
             this.Controls.Add(this.CancelBtn);
             this.Controls.Add(this.SaveBtn);
-            this.Controls.Add(label1);
             this.Controls.Add(birthdayLabel);
             this.Controls.Add(this.birthdayDateTimePicker);
             this.Controls.Add(emailLabel);
@@ -326,5 +326,6 @@ namespace BdLanguage
         private System.Windows.Forms.DateTimePicker birthdayDateTimePicker;
         private System.Windows.Forms.Button SaveBtn;
         private System.Windows.Forms.Button CancelBtn;
+        private System.Windows.Forms.Label NameLB;
     }
 }

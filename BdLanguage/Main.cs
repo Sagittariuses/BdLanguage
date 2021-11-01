@@ -15,7 +15,7 @@ namespace BdLanguage
     public partial class Main : Form
     {
         NewClient client;
-        private SqlConnection LanguageConnection = null;
+        SqlConnection LanguageConnection = null;
         public Main()
         {
             InitializeComponent();
@@ -24,12 +24,13 @@ namespace BdLanguage
 
         private void Main_Load(object sender, EventArgs e)
         {
-            
+
             // TODO: данная строка кода позволяет загрузить данные в таблицу "languageDataSet.Client". При необходимости она может быть перемещена или удалена.
-            this.clientTableAdapter.Fill(this.languageDataSet.Client);
             LanguageConnection = new SqlConnection(@"Data Source=DESKTOP-T664QGA\SQLEXPRESS;Initial Catalog=Language;Integrated Security=True");
+            this.clientTableAdapter.Fill(this.languageDataSet.Client);
             LanguageConnection.Open();
             SqlDataAdapter dataAdapterClient = new SqlDataAdapter("WITH C AS ( SELECT A.ID, A.LastName, A.FirstName, A.Patronymic, A.GenderCode, A.Phone, A.Email, A.Birthday, A.RegistrationDate,(Select MAX(B.StartTime) FROM ClientService B WHERE B.ClientID = A.ID) StartTime, (Select COUNT(1) FROM ClientService B WHERE B.ClientID = A.ID) countproc FROM Client A) select ID, LASTNAME, Firstname, Patronymic, GenderCode, Phone, Email, Birthday, RegistrationDate, CASE WHEN StartTime is null then 'Нет таковых' ELSE CAST(StartTime AS VARCHAR) END StartTime, countproc from C", LanguageConnection);
+
             DataSet db = new DataSet();
             dataAdapterClient.Fill(db);
             ClientDG.DataSource = db.Tables[0];
@@ -162,7 +163,7 @@ namespace BdLanguage
 
         private void ClientDG_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex > 0 && e.RowIndex+1 < ClientDG.RowCount)
+            if (e.RowIndex >= 0 && e.RowIndex+1 < ClientDG.RowCount)
             {
                 Bank.Id = ClientDG.Rows[e.RowIndex].Cells[0].Value.ToString();
                 Bank.LastName = ClientDG.Rows[e.RowIndex].Cells[1].Value.ToString();
@@ -173,6 +174,7 @@ namespace BdLanguage
                 Bank.Email = ClientDG.Rows[e.RowIndex].Cells[6].Value.ToString();
                 Bank.Bithday = Convert.ToDateTime(ClientDG.Rows[e.RowIndex].Cells[7].Value);
                 Bank.Register = Convert.ToDateTime(ClientDG.Rows[e.RowIndex].Cells[8].Value);
+                Bank.Total = Convert.ToInt16(ClientDG.Rows[e.RowIndex].Cells[10].Value);
             }
         }
 
@@ -190,8 +192,12 @@ namespace BdLanguage
 
         private void VisitBtn_Click(object sender, EventArgs e)
         {
-            Visit visit = new Visit();
-            visit.ShowDialog();
+            if (Bank.Id != null)
+            {
+                Visit visit = new Visit();
+                visit.ShowDialog();
+            }
+            
         }
 
         private void DeleteBtn_Click(object sender, EventArgs e)
@@ -200,7 +206,7 @@ namespace BdLanguage
             {
                 try
                 {
-                    SqlCommand cmd = LanguageConnection.CreateCommand();
+                    SqlCommand cmd =  LanguageConnection.CreateCommand();
                     cmd.CommandText = "DELETE FROM Client WHERE ID = @ID";
                     cmd.Parameters.AddWithValue("@ID", Bank.Id);
                     cmd.ExecuteNonQuery();
