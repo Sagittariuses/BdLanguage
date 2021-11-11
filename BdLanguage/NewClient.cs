@@ -64,13 +64,13 @@ namespace BdLanguage
                     SqlCommand cmd = LanguageConnection.CreateCommand();
                     if (Bank.Clicked)
                     {
-                        cmd.CommandText = "UPDATE Client SET LastName=@LastName, FirstName=@FirstName , Patronymic=@Patronymic, Birthday=@Birthday, Email=@Email, Phone=@Phone, GenderCode=@GenderCode WHERE ID = @ID";
-                        cmd.Parameters.AddWithValue("@FirstName", Bank.FirstName);
-                        cmd.Parameters.AddWithValue("@LastName", Bank.LastName);
-                        cmd.Parameters.AddWithValue("@Patronymic", Bank.Patronymic);
-                        cmd.Parameters.AddWithValue("@Birthday", Bank.Bithday);
-                        cmd.Parameters.AddWithValue("@Email", Bank.Email);
-                        cmd.Parameters.AddWithValue("@Phone", Bank.Phone);
+                        cmd.CommandText = "UPDATE Client SET LastName=@FirstName, FirstName=@LastName , Patronymic=@Patronymic, Birthday=@Birthday, Email=@Email, Phone=@Phone, GenderCode=@GenderCode WHERE ID = @ID";
+                        cmd.Parameters.AddWithValue("@FirstName", firstNameTextBox.Text);
+                        cmd.Parameters.AddWithValue("@LastName", lastNameTextBox.Text);
+                        cmd.Parameters.AddWithValue("@Patronymic", patronymicTextBox.Text);
+                        cmd.Parameters.AddWithValue("@Birthday", birthdayDateTimePicker.Value);
+                        cmd.Parameters.AddWithValue("@Email", emailTextBox.Text);
+                        cmd.Parameters.AddWithValue("@Phone", phoneTextBox.Text);
                         cmd.Parameters.AddWithValue("@GenderCode", genderCodeComboBox.Text);
                         cmd.Parameters.AddWithValue("@ID", Bank.Id);
                         cmd.ExecuteNonQuery();

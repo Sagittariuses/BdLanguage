@@ -52,7 +52,8 @@ namespace BdLanguage
                 ClientPanel.Height = 100;
                 ClientPanel.Margin = new Padding(5);
                 flowLayoutPanel.Controls.Add(ClientPanel);
-                ClientPanel.BackColor = Color.Pink;
+                ClientPanel.BackColor = Color.White;
+                ClientPanel.BorderStyle = BorderStyle.FixedSingle;
                 if (Bank.Total == 0)
                 {
                     Label lb = new Label();

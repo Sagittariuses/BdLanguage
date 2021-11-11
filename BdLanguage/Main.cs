@@ -34,6 +34,8 @@ namespace BdLanguage
             DataSet db = new DataSet();
             dataAdapterClient.Fill(db);
             ClientDG.DataSource = db.Tables[0];
+            ViewCB.SelectedIndex = 3;
+            SexCB.SelectedIndex = 2;
             
 
         }
